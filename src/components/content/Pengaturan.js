@@ -11,6 +11,12 @@ import Toggle from "../Toggle";
 export default function Pengaturan() {
   const [modalTambahJasaKurir, setModalTambahJasaKurir] = useState(false);
   const [modalEditJasaKurir, setModalEditJasaKurir] = useState(false);
+  const [modalUbahPIN, setModalUbahPIN] = useState(false);
+  const [modalMatikanPIN, setModalMatikanPIN] = useState(false);
+  // D = DARI TANGGAL
+  // S = SAMPAI TANGGAL
+  const [modalCalenderD, setModalCalenderD] = useState(false);
+  const [modalCalenderS, setModalCalenderS] = useState(false);
   return (
     <div className="grid grid-cols-4">
       <div className="col-span-3 flex-col">
@@ -151,13 +157,27 @@ export default function Pengaturan() {
             jawab untuk menjaga integritas data.
           </p>
           <div className="grid grid-cols-2 gap-2">
-            <div className="col-span-1">
-              <button className="mt-6 bg-blue-300 py-4 cursor-pointer justify-center text-white text-2-bold rounded-lg w-full">
+            <div
+              className="col-span-1"
+              onClick={() =>
+                modalUbahPIN === false
+                  ? setModalUbahPIN(true)
+                  : setModalUbahPIN(false)
+              }
+            >
+              <button className="mt-6 bg-blue-300 py-4 cursor-pointer justify-center text-white text-2-bold rounded-lg w-full focus:outline-none">
                 Ubah PIN
               </button>
             </div>
-            <div className="col-span-1">
-              <button className="mt-6 bg-white py-4 cursor-pointer justify-center text-blue-300 text-2-bold border border-blue-300 rounded-lg w-full">
+            <div
+              className="col-span-1"
+              onClick={() =>
+                modalUbahPIN === false
+                  ? setModalMatikanPIN(true)
+                  : setModalMatikanPIN(false)
+              }
+            >
+              <button className="mt-6 bg-white py-4 cursor-pointer justify-center text-blue-300 text-2-bold border border-blue-300 rounded-lg w-full focus:outline-none">
                 Matikan pin
               </button>
             </div>
@@ -171,18 +191,15 @@ export default function Pengaturan() {
             </li>
             <li className="w-full rounded-lg px-6 py-3 flex items-center border justify-between mt-1">
               <p className="text-2 text-neutral-500">Edit transaksi</p>
-              {/* ICON TOGGLE */}
-              <div className="w-5 h-5 bg-blue-300"></div>
+              <Toggle className={"right-7 -top-1"} />
             </li>
             <li className="w-full rounded-lg px-6 py-3 flex items-center border justify-between mt-1">
               <p className="text-2 text-neutral-500">Hapus transaksi</p>
-              {/* ICON TOGGLE */}
-              <div className="w-5 h-5 bg-blue-300"></div>
+              <Toggle className={"right-7 -top-1"} />
             </li>
             <li className="w-full rounded-lg px-6 py-3 flex items-center border justify-between mt-1">
               <p className="text-2 text-neutral-500">Cetak transaksi</p>
-              {/* ICON TOGGLE */}
-              <div className="w-5 h-5 bg-blue-300"></div>
+              <Toggle className={"right-7 -top-1"} />
             </li>
           </ul>
           <p className="text-1-bold text-neutral-400 mt-20">
@@ -191,13 +208,27 @@ export default function Pengaturan() {
           <div className="grid grid-cols-2 gap-2 mt-4">
             <div className="col-span-1">
               <p className="text-2-bold text-neutral-400">Dari tanggal</p>
-              <div className="py-4 px-6 text-neutral-500 text-2 border rounded-lg mt-2">
+              <div
+                className="py-4 px-6 text-neutral-500 text-2 border rounded-lg mt-2 cursor-pointer"
+                onClick={() =>
+                  modalCalenderD === false
+                    ? setModalCalenderD(true)
+                    : setModalCalenderD(false)
+                }
+              >
                 16/03/2021
               </div>
             </div>
             <div className="col-span-1">
               <p className="text-2-bold text-neutral-400">Sampai tanggal</p>
-              <div className="py-4 px-6 text-neutral-500 text-2 border rounded-lg mt-2">
+              <div
+                className="py-4 px-6 text-neutral-500 text-2 border rounded-lg mt-2 cursor-pointer"
+                onClick={() =>
+                  modalCalenderS === false
+                    ? setModalCalenderS(true)
+                    : setModalCalenderS(false)
+                }
+              >
                 16/03/2021
               </div>
             </div>
@@ -292,6 +323,189 @@ export default function Pengaturan() {
                   </button>
                 </div>
               </div>
+            </div>
+          }
+        />
+      ) : (
+        ""
+      )}
+
+      {modalUbahPIN === true ? (
+        <Modal
+          onClick={() => setModalUbahPIN(false)}
+          content={
+            <div className="rounded-lg w-460px  bg-white absolute top-1/2 transform left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <p className="border b-2 text-center text-1-bold py-4">
+                Ubah PIN
+              </p>
+              <div className="p-6">
+                <p className="text-center text-2 text-neutral-500">
+                  Masukkan PIN sekarang untuk ubah PIN
+                </p>
+                <div className="grid grid-cols-6 gap-2 mt-5">
+                  <div className="col-span-1 border rounded-lg">
+                    <input
+                      type="number"
+                      placeholder="0"
+                      className="w-14 h-14 flex items-center justify-center focus:outline-none text-center text-neutral-300 pl-5"
+                    />
+                  </div>
+                  <div className="col-span-1 border rounded-lg">
+                    <input
+                      type="number"
+                      placeholder="0"
+                      className="w-14 h-14 flex items-center justify-center focus:outline-none text-center text-neutral-300 pl-5"
+                    />
+                  </div>
+                  <div className="col-span-1 border rounded-lg">
+                    <input
+                      type="number"
+                      placeholder="0"
+                      className="w-14 h-14 flex items-center justify-center focus:outline-none text-center text-neutral-300 pl-5"
+                    />
+                  </div>
+                  <div className="col-span-1 border rounded-lg">
+                    <input
+                      type="number"
+                      placeholder="0"
+                      className="w-14 h-14 flex items-center justify-center focus:outline-none text-center text-neutral-300 pl-5"
+                    />
+                  </div>
+                  <div className="col-span-1 border rounded-lg">
+                    <input
+                      type="number"
+                      placeholder="0"
+                      className="w-14 h-14 flex items-center justify-center focus:outline-none text-center text-neutral-300 pl-5"
+                    />
+                  </div>
+                  <div className="col-span-1 border rounded-lg">
+                    <input
+                      type="number"
+                      placeholder="0"
+                      className="w-14 h-14 flex items-center justify-center focus:outline-none text-center text-neutral-300 pl-5"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-2 mt-1 px-3 pb-3 border-t-2 pt-3">
+                <div className="col-span-1">
+                  <button className="text-center bg-white text-blue-300 border border-blue-300 rounded-lg text-white w-full py-4 focus:outline-none">
+                    Kembali
+                  </button>
+                </div>
+                <div className="col-span-1">
+                  <button className="text-center bg-blue-300 rounded-lg text-white w-full py-4 focus:outline-none">
+                    Lanjut
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        />
+      ) : (
+        ""
+      )}
+      {modalMatikanPIN === true ? (
+        <Modal
+          onClick={() => setModalMatikanPIN(false)}
+          content={
+            <div className="rounded-lg w-460px  bg-white absolute top-1/2 transform left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <p className="border b-2 text-center text-1-bold py-4">
+                Matikan PIN
+              </p>
+              <div className="p-6">
+                <p className="text-center text-2 text-neutral-500">
+                  Masukkan PIN sekarang untuk matikan PIN
+                </p>
+                <div className="grid grid-cols-6 gap-2 mt-5">
+                  <div className="col-span-1 border rounded-lg">
+                    <input
+                      type="number"
+                      placeholder="0"
+                      className="w-14 h-14 flex items-center justify-center focus:outline-none text-center text-neutral-300 pl-5"
+                    />
+                  </div>
+                  <div className="col-span-1 border rounded-lg">
+                    <input
+                      type="number"
+                      placeholder="0"
+                      className="w-14 h-14 flex items-center justify-center focus:outline-none text-center text-neutral-300 pl-5"
+                    />
+                  </div>
+                  <div className="col-span-1 border rounded-lg">
+                    <input
+                      type="number"
+                      placeholder="0"
+                      className="w-14 h-14 flex items-center justify-center focus:outline-none text-center text-neutral-300 pl-5"
+                    />
+                  </div>
+                  <div className="col-span-1 border rounded-lg">
+                    <input
+                      type="number"
+                      placeholder="0"
+                      className="w-14 h-14 flex items-center justify-center focus:outline-none text-center text-neutral-300 pl-5"
+                    />
+                  </div>
+                  <div className="col-span-1 border rounded-lg">
+                    <input
+                      type="number"
+                      placeholder="0"
+                      className="w-14 h-14 flex items-center justify-center focus:outline-none text-center text-neutral-300 pl-5"
+                    />
+                  </div>
+                  <div className="col-span-1 border rounded-lg">
+                    <input
+                      type="number"
+                      placeholder="0"
+                      className="w-14 h-14 flex items-center justify-center focus:outline-none text-center text-neutral-300 pl-5"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-2 mt-1 px-3 pb-3 border-t-2 pt-3">
+                <div className="col-span-1">
+                  <button className="text-center bg-white text-blue-300 border border-blue-300 rounded-lg text-white w-full py-4 focus:outline-none">
+                    Kembali
+                  </button>
+                </div>
+                <div className="col-span-1">
+                  <button className="text-center bg-blue-300 rounded-lg text-white w-full py-4 focus:outline-none">
+                    Matikan PIN
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        />
+      ) : (
+        ""
+      )}
+
+      {modalCalenderD === true ? (
+        <Modal
+          onClick={() => setModalCalenderD(false)}
+          content={
+            // tgl nya masih blm gua masukin agak tricky
+            // module tgl nya udah gua install
+            // kalo kurang lebar di atur aja ukuran width or heightnya
+            <div className="rounded-lg w-460px h-96  bg-white absolute top-1/2 transform left-1/2 -translate-x-1/2 -translate-y-1/2">
+              dari tanggallllllllllllllllll
+            </div>
+          }
+        />
+      ) : (
+        ""
+      )}
+
+      {modalCalenderS === true ? (
+        <Modal
+          onClick={() => setModalCalenderS(false)}
+          content={
+            // tgl nya masih blm gua masukin agak tricky
+            // module tgl nya udah gua install
+            // kalo kurang lebar di atur aja ukuran width or heightnya
+            <div className="rounded-lg w-460px h-96  bg-white absolute top-1/2 transform left-1/2 -translate-x-1/2 -translate-y-1/2">
+              sampai tanggal
             </div>
           }
         />
