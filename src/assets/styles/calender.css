@@ -1,0 +1,419 @@
+.calender .react-datepicker__triangle {
+  display: none;
+}
+
+/* wrap calender */
+.calender .react-datepicker {
+  font-size: 14px;
+  font-weight: 400;
+  background-color: #ffffff;
+  box-shadow: 0px 16px 48px rgba(0, 13, 35, 0.1);
+  color: #000d23;
+  padding: 6px;
+  border: none;
+  display: inline-block;
+  position: relative;
+  border-radius: 8px;
+}
+
+/* title calender */
+.calender .react-datepicker__current-month {
+  font-weight: 600;
+  font-size: 16px;
+  color: #1f4bff;
+}
+
+/* title day */
+.calender .react-datepicker__day-name {
+  color: #8f8f8f;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* title day */
+.calender .react-datepicker__day-names {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 8px;
+  margin-top: 11px;
+}
+
+/* header default bg gray changes */
+.calender .react-datepicker__header {
+  background-color: transparent;
+  border-bottom: 0;
+}
+
+/* selected day :hover */
+.calender .react-datepicker__day--selected:hover {
+  background: #1f4bff;
+  border-radius: 8px;
+}
+
+/* selected day :selected */
+.calender .react-datepicker__day--selected {
+  background: #1f4bff;
+}
+
+/* space antar tgl  */
+.calender .react-datepicker__day {
+  margin: 0.3rem;
+  outline: none;
+}
+
+.calender .react-datepicker__day:focus {
+  outline: none;
+}
+
+/* space header to wrap calender */
+.calender .react-datepicker__header {
+  padding-top: 0;
+}
+
+/* arrow */
+
+.react-datepicker__navigation {
+  border: 0;
+}
+
+.select-option-02.calender .react-datepicker__navigation {
+  position: absolute;
+  display: block;
+  width: 9px;
+  height: 9px;
+  border-top: 2px solid #000;
+  border-left: 2px solid #000;
+  border-left-color: #8f8f8f;
+  border-top-color: #8f8f8f;
+  transform: rotate(-45deg);
+  top: 21px;
+  right: 26px;
+}
+
+.calender .react-datepicker__navigation {
+  position: absolute;
+  display: block;
+  width: 9px;
+  height: 9px;
+  border-top: 2px solid #000;
+  border-left: 2px solid #000;
+  border-left-color: #8f8f8f;
+  border-top-color: #8f8f8f;
+  transform: rotate(-45deg);
+  top: 13px;
+  right: 26px;
+}
+
+.rdrDayStartOfMonth .rdrEndEdge {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.react-datepicker__navigation--next {
+  transform: rotate(135deg) !important;
+  outline: none;
+}
+
+.react-datepicker__navigation--previous {
+  left: 26px;
+  outline: none;
+}
+
+.react-datepicker__navigation--next:focus {
+  outline: none;
+}
+
+.react-datepicker__navigation--previous:focus {
+  outline: none;
+}
+
+/* delete focus outline in input field */
+.calender .react-datepicker__input-container {
+  outline: none;
+}
+
+.calender .react-datepicker__input-container input:focus {
+  outline: none;
+}
+
+.calender .react-datepicker__input-container input:hover {
+  cursor: pointer;
+}
+
+.calender .react-datepicker__input-container input {
+  background: #ebeeff;
+  border-radius: 8px;
+  width: 100%;
+  text-align: center;
+  color: #0025b8;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 0;
+}
+
+.calender .react-datepicker-popper {
+  margin-top: 4px;
+}
+
+/* calender range 2 */
+.calender-range .input-group {
+  min-width: max-content;
+  width: max-content;
+  position: relative;
+}
+
+.calender-range .input-group:hover {
+  cursor: pointer;
+}
+
+.calender-range input {
+  background: #ebeeff;
+  border-radius: 8px;
+  width: 100%;
+  text-align: center;
+  color: #0025b8;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 0;
+}
+
+.calender-range input:hover {
+  cursor: pointer;
+}
+
+.calender-range input:focus {
+  outline: none;
+  cursor: pointer;
+}
+
+.calender-range .rdrCalendarWrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: max-content;
+  width: max-content;
+  background-color: #ffffff;
+  box-shadow: 0px 16px 48px rgba(0, 13, 35, 0.1);
+  padding: 6px;
+  border-radius: 8px;
+  margin-top: 4px;
+}
+.calender-range.range2 .rdrCalendarWrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: max-content;
+  width: max-content;
+  background-color: #ffffff;
+  box-shadow: none;
+  padding: 6px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-radius: 0;
+  margin-top: 4px;
+}
+
+.calender-range .rdrDateDisplayWrapper {
+  order: 3;
+}
+
+.calender .date-range-wrapper {
+  width: max-content;
+  max-width: max-content;
+  min-width: max-content;
+}
+
+.rdrNextPrevButton i {
+  /* display: block;
+    width: 0;
+    height: 0;
+    padding: 0;
+    text-align: center;
+    border-style: solid;
+    margin: auto;
+    transform: translate(-3px, 0px); */
+
+  position: absolute;
+  display: block;
+  width: 9px;
+  height: 9px;
+  border-top: 2px solid #000;
+  border-left: 2px solid #000;
+  border-left-color: #8f8f8f;
+  border-top-color: #8f8f8f;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  margin: 0;
+}
+
+.rdrPprevButton i {
+  border-width: 2px 0px 0px 2px;
+}
+
+.rdrNextButton i {
+  border-width: 2px 0px 0px 2px;
+  /* transform: rotate(180deg); */
+  background: transparent;
+  transform: translate(-50%, -50%) rotate(135deg);
+}
+
+.rdrNextPrevButton {
+  position: relative;
+}
+
+.rdrNextPrevButton {
+  background: transparent;
+}
+
+.rdrNextPrevButton:focus {
+  outline: none;
+}
+
+.rdrNextPrevButton:hover {
+  background: transparent;
+}
+
+.rdrDayNumber {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.rdrStartEdge {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.rdrDayEndOfWeek .rdrInRange {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.rdrDayStartOfWeek .rdrInRange {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.rdrEndEdge {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.rdrDayHovered {
+  border-radius: 8px;
+}
+
+.rdrDayToday .rdrDayNumber span:after {
+  display: none;
+}
+
+.rdrDateInput {
+  position: relative;
+}
+
+.rdrDateDisplay {
+}
+
+.rdrDateInput:first-child::after {
+  content: "START";
+  position: absolute;
+  top: -20px;
+  left: 2px;
+  z-index: 100;
+  font-weight: 600;
+  font-size: 12px;
+  color: #5c5c5c;
+}
+
+.rdrDateInput:last-child::after {
+  content: "END";
+  position: absolute;
+  top: -20px;
+  left: 2px;
+  z-index: 100;
+  font-weight: 600;
+  font-size: 12px;
+  color: #5c5c5c;
+}
+
+.rdrDateDisplayWrapper {
+  background-color: transparent;
+  padding-top: 29px;
+  border-top: 1px solid #c2c2c2;
+}
+
+.rdrDateInput.rdrDateDisplayItem input {
+  background-color: transparent;
+  border: 1px solid #c2c2c2;
+  color: #8f8f8f;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.rdrDateDisplayItemActive {
+  border: none;
+}
+
+.rdrDateDisplayItem {
+  box-shadow: none;
+}
+
+.rdrMonth {
+  padding: 0 0.833em 7px 0.833em;
+}
+
+/* select option 02 */
+
+.select-option-02.calender .react-datepicker {
+  padding: 14px 0;
+}
+
+/* wrap absolute input 02 */
+.wrap-absolute {
+  right: -154px;
+  background-color: white;
+  top: -14px;
+  height: 369px;
+  width: 156px;
+  border-left: 1px solid #c2c2c2;
+  padding: 11px 16px;
+}
+.wrap-absolute02 {
+  right: -154px;
+  background-color: white;
+  top: 1px;
+  height: 369px;
+  width: 156px;
+  border-left: 1px solid #c2c2c2;
+  padding: 11px 16px;
+}
+
+.calender.range05 .react-datepicker {
+  font-size: 14px;
+  font-weight: 400;
+  background-color: #ffffff;
+  box-shadow: 0px 16px 48px rgb(0 13 35 / 10%);
+  color: #000d23;
+  padding: 0 0 109px;
+  border: none;
+  display: inline-block;
+  position: relative;
+  border-radius: 8px;
+}
+
+.calender.range05 .react-datepicker .react-datepicker__month-container {
+  position: relative;
+  top: 63px;
+}
+
+.calender.range05 .react-datepicker__navigation {
+  position: absolute;
+  display: block;
+  width: 9px;
+  height: 9px;
+  border-top: 2px solid #000;
+  border-left: 2px solid #000;
+  border-left-color: #8f8f8f;
+  border-top-color: #8f8f8f;
+  transform: rotate(-45deg);
+  top: 71px;
+  right: 26px;
+}

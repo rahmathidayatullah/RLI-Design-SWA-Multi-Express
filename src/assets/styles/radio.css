@@ -1,0 +1,45 @@
+/* start Radio DISABLED no text*/
+.wrap-radio {
+  position: relative;
+  padding-left: 23px;
+  margin-bottom: 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.checkmark {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 16px;
+  width: 16px;
+  background-color: white;
+  border-radius: 100px;
+  border: 1px solid #3c60cd;
+  transform: translateY(-50%);
+}
+.wrap-radio input:checked ~ .checkmark {
+  background-color: white;
+}
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.wrap-radio input:checked ~ .checkmark:after {
+  display: block;
+}
+.wrap-radio .checkmark:after {
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3c60cd;
+  transform: translate(-50%, -50%);
+}
+.radio-cs {
+  opacity: 0;
+}
+/* end Radio DISABLED no text*/
