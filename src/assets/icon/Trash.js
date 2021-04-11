@@ -1,8 +1,9 @@
 import React from "react";
 
-export default function Trash({ width, height, fill, className }) {
+export default function Trash({ width, onClick, height, fill, className }) {
   return (
     <svg
+      onClick={onClick}
       width={width}
       height={height}
       className={className}

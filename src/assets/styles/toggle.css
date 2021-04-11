@@ -1,0 +1,57 @@
+/*start toggle-primary small style ceklist tricky */
+.wrap-toggle-primary {
+  position: relative;
+  cursor: pointer;
+}
+.wrap-toggle-primary input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.toggle-primary {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 16px;
+  width: 28px;
+  background-color: #fff;
+  border: 2px solid #8f8f8f;
+  border-radius: 100px;
+}
+.toggle-default-primary {
+  position: absolute;
+  left: 5.7px;
+  top: 4.9px;
+  width: 6.5px;
+  height: 7px;
+  border-radius: 100px;
+  background-color: #8f8f8f;
+}
+.wrap-toggle-primary input:checked ~ .toggle-primary {
+  background-color: #1f4bff;
+  border: 1px solid #1f4bff;
+}
+.wrap-toggle-primary input:checked ~ .toggle-default-primary {
+  display: none;
+}
+
+.toggle-primary:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.wrap-toggle-primary input:checked ~ .toggle-primary:after {
+  display: block;
+}
+.wrap-toggle-primary .toggle-primary:after {
+  top: 48%;
+  transform: translateY(-50%);
+  right: 3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 100px;
+  background-color: #fff;
+}
+/*end toggle-primary small style toggle tricky */

@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import Check from "../../assets/icon/Check";
 import Image from "../../assets/icon/Image";
 import Camera from "../../assets/icon/Camera";
 import Trash from "../../assets/icon/Trash";
 import Edit from "../../assets/icon/Edit";
 import Add from "../../assets/icon/Add";
+import Modal from "../Modal";
+import Toggle from "../Toggle";
 
 export default function Pengaturan() {
+  const [modalTambahJasaKurir, setModalTambahJasaKurir] = useState(false);
+  const [modalEditJasaKurir, setModalEditJasaKurir] = useState(false);
   return (
     <div className="grid grid-cols-4">
       <div className="col-span-3 flex-col">
@@ -42,17 +46,23 @@ export default function Pengaturan() {
             <li className="flex items-center">
               <div className="w-full rounded-lg px-6 py-3 flex items-center border justify-between">
                 <p className="text-2 text-blue-300">JNE EXPRESS</p>
-                {/* ICON TOGGLE */}
-                <div className="w-5 h-5 bg-blue-300"></div>
+                <Toggle className={"right-7 -top-1"} />
               </div>
               <Trash fill={"#858585"} className={"mx-5 cursor-pointer"} />
-              <Edit fill={"#858585"} className={"cursor-pointer"} />
+              <Edit
+                onClick={() =>
+                  modalEditJasaKurir === false
+                    ? setModalEditJasaKurir(true)
+                    : setModalEditJasaKurir(false)
+                }
+                fill={"#858585"}
+                className={"cursor-pointer"}
+              />
             </li>
             <li className="flex items-center mt-1">
               <div className="w-full rounded-lg px-6 py-3 flex items-center border justify-between">
                 <p className="text-2 text-blue-300">NINJA XPRESS</p>
-                {/* ICON TOGGLE */}
-                <div className="w-5 h-5 bg-blue-300"></div>
+                <Toggle className={"right-7 -top-1"} />
               </div>
               <Trash fill={"#858585"} className={"mx-5 cursor-pointer"} />
               <Edit fill={"#858585"} className={"cursor-pointer"} />
@@ -60,8 +70,7 @@ export default function Pengaturan() {
             <li className="flex items-center mt-1">
               <div className="w-full rounded-lg px-6 py-3 flex items-center border justify-between">
                 <p className="text-2 text-blue-300">POS INDONESIA</p>
-                {/* ICON TOGGLE */}
-                <div className="w-5 h-5 bg-blue-300"></div>
+                <Toggle className={"right-7 -top-1"} />
               </div>
               <Trash fill={"#858585"} className={"mx-5 cursor-pointer"} />
               <Edit fill={"#858585"} className={"cursor-pointer"} />
@@ -69,8 +78,7 @@ export default function Pengaturan() {
             <li className="flex items-center mt-1">
               <div className="w-full rounded-lg px-6 py-3 flex items-center border justify-between">
                 <p className="text-2 text-blue-300">J&T EXPRESS</p>
-                {/* ICON TOGGLE */}
-                <div className="w-5 h-5 bg-blue-300"></div>
+                <Toggle className={"right-7 -top-1"} />
               </div>
               <Trash fill={"#858585"} className={"mx-5 cursor-pointer"} />
               <Edit fill={"#858585"} className={"cursor-pointer"} />
@@ -78,8 +86,7 @@ export default function Pengaturan() {
             <li className="flex items-center mt-1">
               <div className="w-full rounded-lg px-6 py-3 flex items-center border justify-between">
                 <p className="text-2 text-blue-300">TIKI</p>
-                {/* ICON TOGGLE */}
-                <div className="w-5 h-5 bg-blue-300"></div>
+                <Toggle className={"right-7 -top-1"} />
               </div>
               <Trash fill={"#858585"} className={"mx-5 cursor-pointer"} />
               <Edit fill={"#858585"} className={"cursor-pointer"} />
@@ -87,8 +94,7 @@ export default function Pengaturan() {
             <li className="flex items-center mt-1">
               <div className="w-full rounded-lg px-6 py-3 flex items-center border justify-between">
                 <p className="text-2 text-blue-300">SICEPAT</p>
-                {/* ICON TOGGLE */}
-                <div className="w-5 h-5 bg-blue-300"></div>
+                <Toggle className={"right-7 -top-1"} />
               </div>
               <Trash fill={"#858585"} className={"mx-5 cursor-pointer"} />
               <Edit fill={"#858585"} className={"cursor-pointer"} />
@@ -96,8 +102,7 @@ export default function Pengaturan() {
             <li className="flex items-center mt-1">
               <div className="w-full rounded-lg px-6 py-3 flex items-center border justify-between">
                 <p className="text-2 text-blue-300">WAHANA</p>
-                {/* ICON TOGGLE */}
-                <div className="w-5 h-5 bg-blue-300"></div>
+                <Toggle className={"right-7 -top-1"} />
               </div>
               <Trash fill={"#858585"} className={"mx-5 cursor-pointer"} />
               <Edit fill={"#858585"} className={"cursor-pointer"} />
@@ -105,8 +110,7 @@ export default function Pengaturan() {
             <li className="flex items-center mt-1">
               <div className="w-full rounded-lg px-6 py-3 flex items-center border justify-between">
                 <p className="text-2 text-blue-300">GO-SEND</p>
-                {/* ICON TOGGLE */}
-                <div className="w-5 h-5 bg-blue-300"></div>
+                <Toggle className={"right-7 -top-1"} />
               </div>
               <Trash fill={"#858585"} className={"mx-5 cursor-pointer"} />
               <Edit fill={"#858585"} className={"cursor-pointer"} />
@@ -114,8 +118,7 @@ export default function Pengaturan() {
             <li className="flex items-center mt-1">
               <div className="w-full rounded-lg px-6 py-3 flex items-center border justify-between">
                 <p className="text-2 text-blue-300">GRAB EXPRESS</p>
-                {/* ICON TOGGLE */}
-                <div className="w-5 h-5 bg-blue-300"></div>
+                <Toggle className={"right-7 -top-1"} />
               </div>
               <Trash fill={"#858585"} className={"mx-5 cursor-pointer"} />
               <Edit fill={"#858585"} className={"cursor-pointer"} />
@@ -123,14 +126,20 @@ export default function Pengaturan() {
             <li className="flex items-center mt-1">
               <div className="w-full rounded-lg px-6 py-3 flex items-center border justify-between">
                 <p className="text-2 text-blue-300">DHL</p>
-                {/* ICON TOGGLE */}
-                <div className="w-5 h-5 bg-blue-300"></div>
+                <Toggle className={"right-7 -top-1"} />
               </div>
               <Trash fill={"#858585"} className={"mx-5 cursor-pointer"} />
               <Edit fill={"#858585"} className={"cursor-pointer"} />
             </li>
           </ul>
-          <button className="mt-6 bg-blue-300 py-4 w-full flex items-center cursor-pointer justify-center text-white text-2-bold rounded-lg">
+          <button
+            className="mt-6 bg-blue-300 py-4 w-full flex items-center cursor-pointer justify-center text-white text-2-bold rounded-lg focus:outline-none"
+            onClick={() =>
+              modalTambahJasaKurir === false
+                ? setModalTambahJasaKurir(true)
+                : setModalTambahJasaKurir(false)
+            }
+          >
             <Add fill={"#FFFFFF"} />
             <p className="ml-3">Tambah jasa kurir baru</p>
           </button>
@@ -159,8 +168,6 @@ export default function Pengaturan() {
           <ul className="mt-4 w-full">
             <li className="w-full rounded-lg px-6 py-3 flex items-center border justify-between">
               <p className="text-2 text-neutral-500">Tambah transaksi baru</p>
-              {/* ICON TOGGLE */}
-              <div className="w-5 h-5 bg-blue-300"></div>
             </li>
             <li className="w-full rounded-lg px-6 py-3 flex items-center border justify-between mt-1">
               <p className="text-2 text-neutral-500">Edit transaksi</p>
@@ -210,6 +217,87 @@ export default function Pengaturan() {
           </div>
         </div>
       </div>
+      {modalTambahJasaKurir === true ? (
+        <Modal
+          onClick={() => setModalTambahJasaKurir(false)}
+          content={
+            <div className="rounded-lg w-55vw bg-white absolute top-1/2 transform left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <p className="border b-2 text-center text-1-bold py-4">
+                Tambah jasa kurir
+              </p>
+              <div className="px-8">
+                <p className="text-2-bold text-neutral-400 mb-2 mt-8">
+                  Nama jasa kurir
+                </p>
+                <input
+                  type="text"
+                  className="rounded-lg pr-6 py-2 pl-4 border text-neutral-300 focus:outline-none border-neutral-200 w-full"
+                  placeholder="Masukkan nama jasa kurir"
+                />
+                <p className="text-2-bold text-neutral-400 mb-2 mt-8">
+                  Website / URL jasa kurir
+                </p>
+                <input
+                  type="text"
+                  className="rounded-lg pr-6 py-2 pl-4 border text-neutral-300 focus:outline-none border-neutral-200 w-full"
+                  placeholder="Masukkan link website"
+                />
+              </div>
+              <div className="px-5 py-3 border-t-2 mt-5">
+                <button className="bg-white  rounded-lg  w-full py-3 text-2-bold text-white bg-blue-300 focus:outline-none">
+                  Selesai tambah jasa kurir
+                </button>
+              </div>
+            </div>
+          }
+        />
+      ) : (
+        ""
+      )}
+      {modalEditJasaKurir === true ? (
+        <Modal
+          onClick={() => setModalEditJasaKurir(false)}
+          content={
+            <div className="rounded-lg w-55vw bg-white absolute top-1/2 transform left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <p className="border b-2 text-center text-1-bold py-4">
+                Edit jasa kurir
+              </p>
+              <div className="px-8">
+                <p className="text-2-bold text-neutral-400 mb-2 mt-8">
+                  Nama jasa kurir
+                </p>
+                <input
+                  type="text"
+                  className="rounded-lg pr-6 py-2 pl-4 border text-neutral-300 focus:outline-none border-neutral-200 w-full"
+                  placeholder="Masukkan nama jasa kurir"
+                />
+                <p className="text-2-bold text-neutral-400 mb-2 mt-8">
+                  Website / URL jasa kurir
+                </p>
+                <input
+                  type="text"
+                  className="rounded-lg pr-6 py-2 pl-4 border text-neutral-300 focus:outline-none border-neutral-200 w-full"
+                  placeholder="Masukkan link website"
+                />
+              </div>
+              <div className="px-5 py-3 grid grid-cols-2 gap-2 border-t-2 mt-5">
+                <div className="col-span-1">
+                  <button className="bg-white  rounded-lg  w-full py-3 text-2-bold text-neutral-300 border border-neutral-300 focus:outline-none">
+                    Batal edit
+                  </button>
+                </div>
+                <div className="col-span-1">
+                  <button className="bg-white  rounded-lg  w-full py-3 text-2-bold text-white bg-blue-300 focus:outline-none">
+                    Selesai edit
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 }

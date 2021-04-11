@@ -7,6 +7,7 @@ module.exports = {
         "460px": "460px",
         "640px": "640px",
         "87%": "87%",
+        "55vw": "55vw",
       },
       textColor: {
         "neutral-500": "#00000",
