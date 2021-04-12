@@ -3,6 +3,11 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import "assets/styles/typography.css";
+import "assets/styles/radio.css";
+import "assets/styles/checkbox.css";
+import "assets/styles/toggle.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.render(
   <React.StrictMode>
