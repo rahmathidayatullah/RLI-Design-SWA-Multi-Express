@@ -86,7 +86,7 @@ export default function EditCourierPage({ close, field }) {
             </div>
             <div className="px-5 py-3 border-t-2 mt-5">
 
-              <button className="items-center flex justify-center  rounded-lg  w-full py-3 text-2-bold text-white bg-blue-300 focus:outline-none">
+              <button className="items-center flex justify-center rounded-lg  w-full py-3 text-2-bold text-white bg-blue-300 focus:outline-none">
                 {loading ? <div className={`animate-spin`}>
                   <CgSpinnerAlt />
                 </div> : ''}

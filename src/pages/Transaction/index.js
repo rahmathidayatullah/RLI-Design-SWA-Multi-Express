@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchTransaction, setKeyword } from 'features/Transaction/actions'
+import { fetchSetting } from 'features/Setting/actions'
 import FadeLoader from "react-spinners/FadeLoader"
 import Search from "assets/icon/Search"
 import Edit from "assets/icon/Edit";
@@ -9,19 +10,31 @@ import Trash from "assets/icon/Trash";
 import { formatRupiah } from 'utils/formatRupiah'
 import moment from 'moment'
 import Modal from 'components/Modal'
-import { getData, deleteData } from 'utils/fetchData'
-
+import { getData, postData } from 'utils/fetchData'
+import { CgSpinnerAlt } from "react-icons/cg"
+import PinInput from 'react-pin-input'
+import { ToastContainer, toast } from 'react-toastify'
 
 export default function TrasactionPage() {
   const dispatch = useDispatch()
   const transaction = useSelector((state) => state.transaction)
+  const setting = useSelector((state) => state.setting)
   const [isShowEdit, setIsShowEdit] = React.useState({ status: false, id: '', loading: false })
   const [dataEdit, setDataEdit] = React.useState({})
   const [isShowAlert, setIsShowAlert] = React.useState(false)
+  const [isShowPin, setIsShowPin] = React.useState(false)
+
+  const [loading, setLoading] = React.useState({
+    isRemove: false
+  })
+
+  React.useEffect(() => {
+    dispatch(fetchSetting())
+  }, [dispatch, transaction.keyword])
 
   React.useEffect(() => {
     dispatch(fetchTransaction())
-  }, [dispatch, transaction.keyword])
+  }, [])
 
   if (transaction.status === 'idle') return <FadeLoader color={'#123abc'} />
 
@@ -39,17 +52,63 @@ export default function TrasactionPage() {
   }
 
   const handleRemoveTransaction = async () => {
+    if (setting.data.shouldPinDelete) {
+      setIsShowPin(true)
+    } else {
+      const res = await postData(`transactions/${dataEdit.id}/delete`, {})
+      if (res.data.success) {
+        setIsShowEdit({ ...isShowEdit, status: false, id: null, loading: false })
+        dispatch(fetchTransaction());
+        setLoading({ ...loading, isRemove: false });
+        notify(`berhasil hapus data transaksi.`)
+        setIsShowAlert(false)
+      }
+    }
+  }
+  const onComplete = async (value) => {
+    try {
+      const payload = { pin: value }
+      const res = await postData(`transactions/${dataEdit.id}/delete`, payload)
+      if (res.data.success) {
+        setIsShowEdit({ ...isShowEdit, status: false, id: null, loading: false })
+        dispatch(fetchTransaction());
+        setLoading({ ...loading, isRemove: false });
+        notify(`berhasil hapus data transaksi.`)
+        setIsShowAlert(false)
+        setIsShowPin(false)
+      }
 
-    const res = await deleteData(`transaction/${dataEdit.id}`)
-
-    console.log("res")
-    console.log(res)
+    } catch (err) {
+      if (err.response.data.code === "PIN_INCORRECT") {
+        setIsShowAlert(false)
+        notifyError('pin yang anda masukan tidak salah.')
+      }
+    }
 
   }
+  const notify = (data) => toast.success(data, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  })
 
+  const notifyError = (data) => toast.error(data, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  })
 
   return (
     <React.Fragment>
+      <ToastContainer />
       {/* START: HEADER */}
       <div className="flex items-center bg-white p-4 shadow-card rounded-lg">
         <div className="grid grid-cols-11 gap-2 w-full">
@@ -158,14 +217,7 @@ export default function TrasactionPage() {
                   <Print fill={"#3C60CD"} />
                 </button>
               </div>
-              <div
-                className="col-span-4"
-              // onClick={() =>
-              //   modalHapusTransaksi === false
-              //     ? setModalHapusTransaksi(true)
-              //     : setModalHapusTransaksi(false)
-              // }
-              >
+              <div className="col-span-4">
                 <button onClick={handleShowRemoveTransaction} className="flex items-center justify-center w-full bg-blue-100 rounded-lg py-3 cursor-pointer focus:outline-none">
                   <Trash fill={"#3C60CD"} />
                 </button>
@@ -197,11 +249,13 @@ export default function TrasactionPage() {
                   </button>
                 </div>
                 <div
-                  className="col-span-1"
-                  onClick={() => null}
+                  className="flex"
+                  onClick={() => handleRemoveTransaction()}
                 >
-                  <button className="text-center bg-red-300 rounded-lg text-white w-full py-4 focus:outline-none">
-                    Hapus transaksi
+                  <button className="justify-center items-center flex text-center bg-red-300 rounded-lg text-white w-full py-4 focus:outline-none">
+                    {loading.isRemove && <div className={`animate-spin`}>
+                      <CgSpinnerAlt />
+                    </div>}   Hapus transaksi
                   </button>
                 </div>
               </div>
@@ -210,6 +264,49 @@ export default function TrasactionPage() {
         />
         }
       </div>
+
+      {isShowPin && <Modal
+        onClick={() => setIsShowPin(false)}
+        content={
+          <div className="rounded-lg w-460px  bg-white absolute top-1/2 transform left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <p className="border b-2 text-center text-1-bold py-4">Konfirmasi PIN</p>
+            <div className="p-6">
+              <p className="text-center text-2 text-neutral-500">Masukkan PIN untuk konfirmasi hapus transaksi</p>
+              <div className="flex items-center justify-center">
+
+                <PinInput
+                  focus
+                  length={6}
+                  secret
+                  type="numeric"
+                  inputMode="number"
+                  style={{ padding: '10px' }}
+                  inputStyle={{ borderColor: 'gray' }}
+                  inputFocusStyle={{ borderColor: 'blue' }}
+                  onComplete={onComplete}
+                  autoSelect={true}
+                  regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 mt-1 px-3 pb-3 border-t-2 pt-3">
+              <div className="col-span-1">
+                <button onClick={() => setIsShowPin(false)} className="text-center bg-white text-blue-300 border border-blue-300 rounded-lg w-full py-4 focus:outline-none">
+                  Kembali
+                </button>
+              </div>
+              <div className="col-span-1">
+                <button className="justify-center items-center flex text-center bg-red-300 rounded-lg text-white w-full py-4 focus:outline-none">
+                  {loading.isRemove && <div className={`animate-spin`}>
+                    <CgSpinnerAlt />
+                  </div>}   Hapus transaksi
+                  </button>
+              </div>
+            </div>
+          </div>
+        }
+      />}
 
 
     </React.Fragment>

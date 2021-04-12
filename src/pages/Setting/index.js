@@ -4,9 +4,7 @@ import { fetchCourier } from 'features/Courier/actions'
 import { fetchSetting } from 'features/Setting/actions'
 import FadeLoader from "react-spinners/FadeLoader"
 import { CgSpinnerAlt } from "react-icons/cg";
-// import moment from 'moment'
 import { putData, postData, deleteData } from 'utils/fetchData'
-// import Check from "assets/icon/Check";
 import Image from "assets/icon/Image";
 import Trash from "assets/icon/Trash";
 import Edit from "assets/icon/Edit";
