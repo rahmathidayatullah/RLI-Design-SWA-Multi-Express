@@ -17,6 +17,14 @@ const initialState = {
   data: [],
   status: statuslist.idle,
   keyword: '',
+  couriers: '',
+  priceMax: '',
+  priceMin: '',
+  date: {
+    startDate: new Date(),
+    endDate: new Date(),
+    key: "selection",
+  },
   notif: {
     id: '',
     message: '',

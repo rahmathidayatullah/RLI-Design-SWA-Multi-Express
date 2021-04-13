@@ -42,8 +42,29 @@ export default function SettingPage() {
 
   if (setting.status === "idle") return <FadeLoader color={"#123abc"} />;
 
-  const handleUploadImage = async () => {
-    const res = await postData("images", {});
+  const handleUploadImage = async (e) => {
+    if (
+      e.target.files[0].type === 'image/jpg' ||
+      e.target.files[0].type === 'image/png' ||
+      e.target.files[0].type === 'image/jpeg'
+    ) {
+      let payload = new FormData()
+      payload.append('image', e.target.files[0])
+
+      const res = await postData("images", payload);
+
+      if (res.data.success) {
+        const update = await putData('settings', { photo: res.data.data })
+        if (update.data.success) {
+          dispatch(fetchSetting());
+          notify(`berhasil edit gambar`);
+        }
+
+      }
+    } else {
+      notifyError('format gambar tidak sesuai silahkan masukan dengan format beriku ini : (.jpg, .png, png)')
+    }
+
   };
 
   const handleResetImage = async () => {
@@ -112,6 +133,17 @@ export default function SettingPage() {
     }
   };
 
+  const notifyError = (data) =>
+    toast.error(data, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
   const handleTogglePin = async (status) => {
     setIsShowPin(true);
   };
@@ -151,7 +183,7 @@ export default function SettingPage() {
               <input
                 type="file"
                 className="inset-0 absolute cursor-pointer w-full opacity-0"
-                onClick={() => handleUploadImage()}
+                onChange={handleUploadImage}
               />
             </button>
             <button
@@ -330,11 +362,11 @@ export default function SettingPage() {
               <p className="text-2-bold text-neutral-400">Dari tanggal</p>
               <div
                 className="py-4 px-6 text-neutral-500 text-2 border rounded-lg mt-2 cursor-pointer"
-                // onClick={() =>
-                //   modalCalenderD === false
-                //     ? setModalCalenderD(true)
-                //     : setModalCalenderD(false)
-                // }
+              // onClick={() =>
+              //   modalCalenderD === false
+              //     ? setModalCalenderD(true)
+              //     : setModalCalenderD(false)
+              // }
               >
                 16/03/2021
               </div>
@@ -343,11 +375,11 @@ export default function SettingPage() {
               <p className="text-2-bold text-neutral-400">Sampai tanggal</p>
               <div
                 className="py-4 px-6 text-neutral-500 text-2 border rounded-lg mt-2 cursor-pointer"
-                // onClick={() =>
-                //   modalCalenderS === false
-                //     ? setModalCalenderS(true)
-                //     : setModalCalenderS(false)
-                // }
+              // onClick={() =>
+              //   modalCalenderS === false
+              //     ? setModalCalenderS(true)
+              //     : setModalCalenderS(false)
+              // }
               >
                 16/03/2021
               </div>

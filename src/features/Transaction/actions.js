@@ -4,7 +4,8 @@ import {
   SUCCESS_FETCHING_TRANSACTION,
   SET_KEYWORD,
   SET_NOTIF
-} from "./constants";
+} from "./constants"
+import moment from "moment";
 
 import { getData } from 'utils/fetchData'
 import debounce from "debounce-promise";
@@ -46,8 +47,21 @@ export const fetchTransaction = () => {
       }, 5000)
 
       let keyword = getState().transaction.keyword || '';
+      let start = moment(getState().transaction.date.startDate).format("YYYY-MM-DD") || "";
+      let end = moment(getState().transaction.date.endDate).format("YYYY-MM-DD") || "";
+      let priceMin = getState().transaction.priceMin || '';
+      let priceMax = getState().transaction.priceMax || '';
+      let couriers = getState().transaction.couriers || '';
+
       dispatch(startFetchingTransaction());
-      const params = { search: keyword }
+      const params = {
+        search: keyword,
+        start,
+        end,
+        priceMin,
+        priceMax,
+        couriers,
+      }
       const res = await debouncedFetchTransaction('transactions', params);
 
       dispatch(successFetchingTransaction({ transaction: res.data.data }));
