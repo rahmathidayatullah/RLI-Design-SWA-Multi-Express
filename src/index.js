@@ -8,6 +8,7 @@ import "assets/styles/radio.css";
 import "assets/styles/checkbox.css";
 import "assets/styles/toggle.css";
 import 'react-toastify/dist/ReactToastify.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 ReactDOM.render(
   <React.StrictMode>

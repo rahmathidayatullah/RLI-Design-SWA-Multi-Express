@@ -13,9 +13,9 @@ const schema = yup.object().shape({
   courierName: yup.string().required('jasa kurir tidak boleh kosong.'),
   noResi: yup.string().required('nomor resi tidak boleh kosong.'),
   receiverNam: yup.string().required('nomor resi tidak boleh kosong.'),
-  noResi: yup.string().required('nomor resi tidak boleh kosong.'),
-  noResi: yup.string().required('nomor resi tidak boleh kosong.'),
-  noResi: yup.string().required('nomor resi tidak boleh kosong.'),
+  // noResi: yup.string().required('nomor resi tidak boleh kosong.'),
+  // noResi: yup.string().required('nomor resi tidak boleh kosong.'),
+  // noResi: yup.string().required('nomor resi tidak boleh kosong.'),
 });
 
 export default function TambahTransaksi() {

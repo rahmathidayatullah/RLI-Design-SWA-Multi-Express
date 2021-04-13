@@ -14,6 +14,7 @@ import { getData, postData } from 'utils/fetchData'
 import { CgSpinnerAlt } from "react-icons/cg"
 import PinInput from 'react-pin-input'
 import { ToastContainer, toast } from 'react-toastify'
+import ModalEdit from './edit'
 
 export default function TrasactionPage() {
   const dispatch = useDispatch()
@@ -23,6 +24,7 @@ export default function TrasactionPage() {
   const [dataEdit, setDataEdit] = React.useState({})
   const [isShowAlert, setIsShowAlert] = React.useState(false)
   const [isShowPin, setIsShowPin] = React.useState(false)
+  const [isShowModalEdit, setIsShowModalEdit] = React.useState(false)
 
   const [loading, setLoading] = React.useState({
     isRemove: false
@@ -202,11 +204,7 @@ export default function TrasactionPage() {
             <div className="grid grid-cols-12 gap-2">
               <div
                 className="col-span-4"
-              // onClick={() =>
-              //   modalEditTransaksi === false
-              //     ? setModalEditTransaksi(true)
-              //     : setModalEditTransaksi(false)
-              // }
+                onClick={() => setIsShowModalEdit(true)}
               >
                 <button className="flex items-center justify-center w-full bg-blue-100 rounded-lg py-3 cursor-pointer focus:outline-none">
                   <Edit fill={"#3C60CD"} />
@@ -306,6 +304,16 @@ export default function TrasactionPage() {
             </div>
           </div>
         }
+      />}
+
+      {isShowModalEdit && <ModalEdit
+
+        setting={setting}
+        transaction={isShowEdit.id}
+        close={() => {
+          setIsShowModalEdit(false)
+          setIsShowEdit({ ...isShowEdit, status: false, id: null, loading: false })
+        }}
       />}
 
 
