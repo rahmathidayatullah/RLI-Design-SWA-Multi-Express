@@ -3,6 +3,7 @@ import {
   ERROR_FETCHING_TRANSACTION,
   SUCCESS_FETCHING_TRANSACTION,
   SET_KEYWORD,
+  SET_COURIER,
   SET_NOTIF
 } from "./constants"
 import moment from "moment";
@@ -86,4 +87,9 @@ export const setNotif = (notif) => {
   };
 };
 
-
+export const setCourier = (couriers) => {
+  return {
+    type: SET_COURIER,
+    couriers,
+  };
+}

@@ -2,6 +2,7 @@ import {
   START_FETCHING_TRANSACTION,
   SUCCESS_FETCHING_TRANSACTION,
   ERROR_FETCHING_TRANSACTION,
+  SET_COURIER,
   SET_KEYWORD,
   SET_NOTIF
 } from "./constants";
@@ -50,6 +51,9 @@ export default function reducer(state = initialState, action) {
 
     case SET_NOTIF:
       return { ...state, notif: action.notif }
+
+    case SET_COURIER:
+      return { ...state, couriers: action.couriers }
 
     default:
       return state;

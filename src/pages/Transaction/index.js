@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchTransaction, setKeyword } from 'features/Transaction/actions'
+import { fetchTransaction, setKeyword, setCourier } from 'features/Transaction/actions'
 import { fetchSetting } from 'features/Setting/actions'
 import FadeLoader from "react-spinners/FadeLoader"
 import Search from "assets/icon/Search"
@@ -15,6 +15,7 @@ import { CgSpinnerAlt } from "react-icons/cg"
 import PinInput from 'react-pin-input'
 import { ToastContainer, toast } from 'react-toastify'
 import ModalEdit from './edit'
+import Checkbox from 'components/Checkbox'
 
 export default function TrasactionPage() {
   const dispatch = useDispatch()
@@ -25,16 +26,52 @@ export default function TrasactionPage() {
   const [isShowAlert, setIsShowAlert] = React.useState(false)
   const [isShowPin, setIsShowPin] = React.useState(false)
   const [isShowModalEdit, setIsShowModalEdit] = React.useState(false)
+  const [isShowFilterCourier, setIsShowFilterCourier] = React.useState(false)
+  const [courier, setFilterCourier] = React.useState([])
+  const [loading, setLoading] = React.useState({ isRemove: false })
 
-  const [loading, setLoading] = React.useState({
-    isRemove: false
-  })
+  const checkCourier = async () => {
+    const res = await getData('couriers')
+    let check = []
+    res.data.data.forEach(data => {
+      check.push({
+        id: data.id,
+        name: data.name,
+        isChecked: false
+      })
+    });
+    setFilterCourier(check)
+  }
+
+
+  const handleFilterCourier = (data) => {
+    let cour = []
+    for (let i = 0; i < courier.length; i++) {
+      if (courier[i].id === data.id) {
+        cour.push({ ...courier[i], isChecked: data.isChecked ? data.isChecked = false : data.isChecked = true })
+      } else {
+        cour.push(courier[i])
+      }
+    }
+    setFilterCourier(cour)
+  }
+
+  const handleFinishFilter = () => {
+    let filter = []
+    courier.forEach(data => {
+      if (data.isChecked) filter.push(data.id)
+    })
+
+    dispatch(setCourier(filter.join(',')))
+    setIsShowFilterCourier(false)
+  }
 
   React.useEffect(() => {
     dispatch(fetchTransaction())
-  }, [dispatch, transaction.keyword])
+  }, [dispatch, transaction.keyword, transaction.couriers])
 
   React.useEffect(() => {
+    checkCourier()
     dispatch(fetchSetting())
   }, [])
 
@@ -124,14 +161,7 @@ export default function TrasactionPage() {
               placeholder="Cari nama, no. resi, atau alamat"
             />
           </div>
-          <div
-            className="col-span-2 border rounded-lg border-neutral-200 py-4 flex items-center justify-center text-neutral-300 cursor-pointer"
-          // onClick={() =>
-          //   modalFilterJasaKurir === false
-          //     ? setModalFilterjasakurir(true)
-          //     : setModalFilterjasakurir(false)
-          // }
-          >
+          <div onClick={() => setIsShowFilterCourier(true)} className="col-span-2 border rounded-lg border-neutral-200 py-4 flex items-center justify-center text-neutral-300 cursor-pointer">
             Filter jasa kurir
           </div>
           <div
@@ -314,6 +344,46 @@ export default function TrasactionPage() {
           setIsShowModalEdit(false)
           setIsShowEdit({ ...isShowEdit, status: false, id: null, loading: false })
         }}
+      />}
+
+      {isShowFilterCourier && <Modal
+        onClick={() => setIsShowFilterCourier(false)}
+        content={
+          <div className="rounded-lg w-460px h-5/6 bg-white absolute top-1/2 transform left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <p className="border b-2 text-center text-1-bold py-4">
+              Pilih jasa kurir
+              </p>
+            <div className="overflow-scroll pt-4 h-3/4">
+              <ul>
+                {courier.map((courier, i) => {
+                  return (
+                    <li key={i} className="py-4 pl-6 flex items-center justify-between relative" onClick={() => handleFilterCourier(courier)}>
+                      <p className="text-neutral-300">{courier.name}</p>
+                      <Checkbox className={"right-7"} checked={courier.isChecked} />
+                    </li>
+                  )
+                })}
+
+              </ul>
+            </div>
+            <div className="absolute bottom-0 left-0 grid grid-cols-2 gap-2 items-center w-full px-4 pb-2">
+              <div className="col-span-1">
+                <button onClick={() => {
+                  setIsShowFilterCourier(false)
+                  dispatch(setCourier(''))
+                }
+                } className="bg-white border rounded-lg border-neutral-300 text-neutral-300 w-full py-3 text-2-bold">
+                  Reset filter
+                  </button>
+              </div>
+              <div className="col-span-1">
+                <button onClick={() => handleFinishFilter()} className="rounded-lg  w-full py-3 text-2-bold text-white bg-blue-300">
+                  Terapkan filter
+                </button>
+              </div>
+            </div>
+          </div>
+        }
       />}
 
 
