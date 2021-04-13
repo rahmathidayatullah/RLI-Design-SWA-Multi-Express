@@ -4,15 +4,15 @@ import Check from "assets/icon/Check";
 import Modal from "components/Modal";
 import Radio from "components/Radio";
 import { DateRange } from "react-date-range";
-import { Link } from 'react-router-dom'
-import { useForm } from "react-hook-form"
-import * as yup from "yup"
-import { yupResolver } from '@hookform/resolvers/yup'
+import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const schema = yup.object().shape({
-  courierName: yup.string().required('jasa kurir tidak boleh kosong.'),
-  noResi: yup.string().required('nomor resi tidak boleh kosong.'),
-  receiverNam: yup.string().required('nomor resi tidak boleh kosong.'),
+  courierName: yup.string().required("jasa kurir tidak boleh kosong."),
+  noResi: yup.string().required("nomor resi tidak boleh kosong."),
+  receiverNam: yup.string().required("nomor resi tidak boleh kosong."),
   // noResi: yup.string().required('nomor resi tidak boleh kosong.'),
   // noResi: yup.string().required('nomor resi tidak boleh kosong.'),
   // noResi: yup.string().required('nomor resi tidak boleh kosong.'),
@@ -23,8 +23,8 @@ export default function TambahTransaksi() {
   const [isClose, setIsClose] = React.useState(false);
   const [modalCalender, setModalCalender] = React.useState(false);
   const [field, setField] = React.useState({
-    courId: '',
-    courierName: 'Pilih jasa kurir',
+    courId: "",
+    courierName: "Pilih jasa kurir",
     noResi: "",
     deliveryDate: new Date(),
     receiverNam: "",
@@ -33,10 +33,14 @@ export default function TambahTransaksi() {
     senderAddress: "",
     cost: 0,
     additionalInfo: "",
-    pin: ""
-  })
+    pin: "",
+  });
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
@@ -55,7 +59,7 @@ export default function TambahTransaksi() {
     //   }
     //   setLoading(false);
     // }
-  }
+  };
 
   return (
     <div className="grid grid-cols-4">
@@ -63,7 +67,8 @@ export default function TambahTransaksi() {
         <p className="text-2-bold text-neutral-400 mb-2">Jasa kurir</p>
         <div
           className="rounded-lg pr-6 py-4 pl-6 border text-blue-300 border-neutral-200 cursor-pointer"
-          onClick={() => setIsShowCourier(!isShowCourier)}>
+          onClick={() => setIsShowCourier(!isShowCourier)}
+        >
           {field.courierName}
         </div>
         <p className="text-2-bold text-neutral-400 mb-2 mt-8">Nomor resi</p>
@@ -71,7 +76,6 @@ export default function TambahTransaksi() {
           {...register("name")}
           type="text"
           name="name"
-
           className="rounded-lg pr-6 py-4 pl-6 border text-neutral-300 focus:outline-none border-neutral-200"
           placeholder="Masukkan nomor resi"
         />
@@ -142,7 +146,6 @@ export default function TambahTransaksi() {
               <Close width={"30"} height={"30"} fill={"#858585"} />
             </div>
             <p className="text-2-bold text-neutral-300 mt-1">Batal</p>
-
           </div>
           <div className="flex flex-col items-center justify-center cursor-pointer mt-6">
             <div className="w-16 h-16 rounded-full flex items-center justify-center border bg-blue-300">
@@ -187,7 +190,7 @@ export default function TambahTransaksi() {
                   Semua data yang telah dimasukkan akan hilang dan tidak bisa
                   dikembalikan lagi jika Anda lanjut untuk batal.
                 </p>
-                <Link to='/transaction'>
+                <Link to="/transaction">
                   <button className="mt-9 text-center bg-red-300 rounded-lg text-white w-full py-4 focus:outline-none">
                     Batal
                   </button>
