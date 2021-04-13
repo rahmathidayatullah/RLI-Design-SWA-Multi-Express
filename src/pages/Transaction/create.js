@@ -181,7 +181,6 @@ export default function TambahTransaksi() {
           type="text"
           defaultValue={field.destinationAddress}
           rows="4"
-          type="text"
           className="rounded-lg pr-6 py-2 pl-4 border text-neutral-300 focus:outline-none border-neutral-200"
           placeholder="Isi alamat"
         />
@@ -212,7 +211,6 @@ export default function TambahTransaksi() {
           type="text"
           defaultValue={field.senderAddress}
           rows="4"
-          type="text"
           className="rounded-lg pr-6 py-2 pl-4 border text-neutral-300 focus:outline-none border-neutral-200"
           placeholder="Isi alamat"
         />
