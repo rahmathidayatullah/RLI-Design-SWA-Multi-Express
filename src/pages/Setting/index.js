@@ -145,12 +145,14 @@ export default function SettingPage() {
             </div>
           </div>
           <div className="col-span-1">
-            <button
-              onClick={() => handleUploadImage()}
-              className="items-center text-white py-4 w-full flex justify-center bg-blue-300 rounded-lg focus:outline-none"
-            >
+            <button className="items-center text-white py-4 w-full flex justify-center bg-blue-300 rounded-lg focus:outline-none relative overflow-hidden">
               <Image fill={"#FFFFFF"} />
               <p className="text-2-bold ml-3">Pilih dari galeri</p>
+              <input
+                type="file"
+                className="inset-0 absolute cursor-pointer w-full opacity-0"
+                onClick={() => handleUploadImage()}
+              />
             </button>
             <button
               onClick={handleResetImage}
