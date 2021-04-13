@@ -31,11 +31,11 @@ export default function TrasactionPage() {
   })
 
   React.useEffect(() => {
-    dispatch(fetchSetting())
+    dispatch(fetchTransaction())
   }, [dispatch, transaction.keyword])
 
   React.useEffect(() => {
-    dispatch(fetchTransaction())
+    dispatch(fetchSetting())
   }, [])
 
   if (transaction.status === 'idle') return <FadeLoader color={'#123abc'} />
