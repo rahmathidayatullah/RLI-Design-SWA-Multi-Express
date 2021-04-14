@@ -2,9 +2,11 @@ import {
   START_FETCHING_TRANSACTION,
   SUCCESS_FETCHING_TRANSACTION,
   ERROR_FETCHING_TRANSACTION,
+  SET_DATE,
   SET_COURIER,
   SET_KEYWORD,
-  SET_NOTIF
+  SET_NOTIF,
+  SET_PRICE
 } from "./constants";
 
 const statuslist = {
@@ -22,8 +24,6 @@ const initialState = {
   priceMax: '',
   priceMin: '',
   date: {
-    startDate: new Date(),
-    endDate: new Date(),
     key: "selection",
   },
   notif: {
@@ -54,6 +54,12 @@ export default function reducer(state = initialState, action) {
 
     case SET_COURIER:
       return { ...state, couriers: action.couriers }
+
+    case SET_PRICE:
+      return { ...state, priceMin: action.priceMin, priceMax: action.priceMax }
+
+    case SET_DATE:
+      return { ...state, date: action.date };
 
     default:
       return state;

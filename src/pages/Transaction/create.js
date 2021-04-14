@@ -356,21 +356,7 @@ export default function TambahTransaksi() {
       )}
 
       <ToastContainer />
-      {/* {modalCalender === true ? (
-        <Modal
-          onClick={() => setModalCalender(false)}
-          content={
-            // tgl nya masih blm gua masukin agak tricky
-            // module tgl nya udah gua install
-            // kalo kurang lebar di atur aja ukuran width or heightnya
-            <div className="rounded-lg w-460px h-96  bg-white absolute top-1/2 transform left-1/2 -translate-x-1/2 -translate-y-1/2">
-              disini tempat naro calender
-            </div>
-          }
-        />
-      ) : (
-        ""
-      )} */}
+
     </div>
   );
 }

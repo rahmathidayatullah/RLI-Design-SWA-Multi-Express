@@ -4,7 +4,7 @@ import { fetchCourier } from "features/Courier/actions";
 import { fetchSetting } from "features/Setting/actions";
 import FadeLoader from "react-spinners/FadeLoader";
 import { CgSpinnerAlt } from "react-icons/cg";
-import { putData, postData, deleteData } from "utils/fetchData";
+import { putData, postData, deleteData, getData } from "utils/fetchData";
 import Image from "assets/icon/Image";
 import Trash from "assets/icon/Trash";
 import Edit from "assets/icon/Edit";
@@ -16,6 +16,8 @@ import EditCourier from "./editCourier";
 import Modal from "components/Modal";
 import TogglePin from "./togglePin";
 import EditPin from "./editPin";
+import DatePicker from 'react-datepicker'
+import ButtonExport from './export'
 
 export default function SettingPage() {
   const dispatch = useDispatch();
@@ -34,10 +36,20 @@ export default function SettingPage() {
   const [fieldCourier, setFieldCourier] = React.useState({});
   const [isShowPin, setIsShowPin] = React.useState(false);
   const [isNewPin, setIsNewPin] = React.useState(false);
+  const [startDate, setStartDate] = React.useState(new Date())
+  const [endDate, setEndDate] = React.useState(new Date())
+  const [report, setReport] = React.useState([])
+
+
+  const handleExportCsv = async (start, end) => {
+    const res = await getData(`reports?startDate=${start || ''}&endDate=${end || ''}`)
+    setReport(res.data.data)
+  }
 
   React.useEffect(() => {
     dispatch(fetchCourier());
     dispatch(fetchSetting());
+    handleExportCsv(startDate, endDate)
   }, [dispatch]);
 
   if (setting.status === "idle") return <FadeLoader color={"#123abc"} />;
@@ -362,32 +374,37 @@ export default function SettingPage() {
               <p className="text-2-bold text-neutral-400">Dari tanggal</p>
               <div
                 className="py-4 px-6 text-neutral-500 text-2 border rounded-lg mt-2 cursor-pointer"
-              // onClick={() =>
-              //   modalCalenderD === false
-              //     ? setModalCalenderD(true)
-              //     : setModalCalenderD(false)
-              // }
               >
-                16/03/2021
+                <DatePicker
+                  onChange={(date) => {
+                    setStartDate(date)
+                    handleExportCsv(date, endDate)
+                  }}
+                  selected={startDate}
+                  className="rounded-lg pr-6 py-2 pl-4 border text-neutral-300 focus:outline-none border-neutral-200 cursor-pointer"
+                />
               </div>
             </div>
             <div className="col-span-1">
               <p className="text-2-bold text-neutral-400">Sampai tanggal</p>
               <div
-                className="py-4 px-6 text-neutral-500 text-2 border rounded-lg mt-2 cursor-pointer"
-              // onClick={() =>
-              //   modalCalenderS === false
-              //     ? setModalCalenderS(true)
-              //     : setModalCalenderS(false)
-              // }
-              >
-                16/03/2021
+                className="py-4 px-6 text-neutral-500 text-2 border rounded-lg mt-2 cursor-pointer">
+                <DatePicker
+                  onChange={(date) => {
+                    setEndDate(date)
+                    handleExportCsv(startDate, date)
+                  }}
+                  selected={endDate}
+                  className="rounded-lg pr-6 py-2 pl-4 border text-neutral-300 focus:outline-none border-neutral-200 cursor-pointer"
+                />
               </div>
             </div>
           </div>
-          <button className="mt-6 bg-blue-300 py-4 cursor-pointer justify-center text-white text-2-bold w-full rounded-lg w-full focus:outline-none">
+          <ButtonExport data={report} />
+
+          {/* <button onClick={() => handleExportCsv()} className="mt-6 bg-blue-300 py-4 cursor-pointer justify-center text-white text-2-bold w-full rounded-lg w-full focus:outline-none">
             Ekspor daftar transaksi
-          </button>
+          </button> */}
         </div>
       </div>
 

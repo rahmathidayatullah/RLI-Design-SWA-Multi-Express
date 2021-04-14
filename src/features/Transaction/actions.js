@@ -4,7 +4,9 @@ import {
   SUCCESS_FETCHING_TRANSACTION,
   SET_KEYWORD,
   SET_COURIER,
-  SET_NOTIF
+  SET_NOTIF,
+  SET_PRICE,
+  SET_DATE
 } from "./constants"
 import moment from "moment";
 
@@ -48,8 +50,8 @@ export const fetchTransaction = () => {
       }, 5000)
 
       let keyword = getState().transaction.keyword || '';
-      let start = moment(getState().transaction.date.startDate).format("YYYY-MM-DD") || "";
-      let end = moment(getState().transaction.date.endDate).format("YYYY-MM-DD") || "";
+      let startDate = getState().transaction.date.startDate ? moment(getState().transaction.date.startDate).format("YYYY-MM-DD") : "";
+      let endDate = getState().transaction.date.endDate ? moment(getState().transaction.date.endDate).format("YYYY-MM-DD") : "";
       let priceMin = getState().transaction.priceMin || '';
       let priceMax = getState().transaction.priceMax || '';
       let couriers = getState().transaction.couriers || '';
@@ -57,8 +59,8 @@ export const fetchTransaction = () => {
       dispatch(startFetchingTransaction());
       const params = {
         search: keyword,
-        start,
-        end,
+        startDate,
+        endDate,
         priceMin,
         priceMax,
         couriers,
@@ -93,3 +95,23 @@ export const setCourier = (couriers) => {
     couriers,
   };
 }
+
+export const setPrice = (priceMin, priceMax) => {
+  return {
+    type: SET_PRICE,
+    priceMin,
+    priceMax,
+  };
+}
+
+export const setDate = (data) => {
+  let date = {
+    key: "selection",
+  }
+  return {
+    type: SET_DATE,
+    date: data.selection ? data.selection : date,
+  };
+};
+
+

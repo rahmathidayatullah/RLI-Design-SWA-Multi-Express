@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchTransaction, setKeyword, setCourier } from 'features/Transaction/actions'
+import { fetchTransaction, setKeyword, setCourier, setPrice, setDate } from 'features/Transaction/actions'
 import { fetchSetting } from 'features/Setting/actions'
 import FadeLoader from "react-spinners/FadeLoader"
 import Search from "assets/icon/Search"
@@ -16,6 +16,11 @@ import PinInput from 'react-pin-input'
 import { ToastContainer, toast } from 'react-toastify'
 import ModalEdit from './edit'
 import Checkbox from 'components/Checkbox'
+import Minus from "assets/icon/Minus"
+import { useForm } from "react-hook-form"
+import DateRange from "components/InputDate"
+import { useReactToPrint } from 'react-to-print'
+import ComponentToPrint from './print'
 
 export default function TrasactionPage() {
   const dispatch = useDispatch()
@@ -27,8 +32,25 @@ export default function TrasactionPage() {
   const [isShowPin, setIsShowPin] = React.useState(false)
   const [isShowModalEdit, setIsShowModalEdit] = React.useState(false)
   const [isShowFilterCourier, setIsShowFilterCourier] = React.useState(false)
+  const [isShowFilterPrice, setIsShowFilterPrice] = React.useState(false)
   const [courier, setFilterCourier] = React.useState([])
-  const [loading, setLoading] = React.useState({ isRemove: false })
+  const [loading, setLoading] = React.useState({ isRemove: false, filterPrice: false })
+  let [isShowed, setIsShowed] = React.useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    setValue
+  } = useForm({
+    mode: "onBlur",
+  });
+
+  const componentRef = React.useRef();
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
 
   const checkCourier = async () => {
     const res = await getData('couriers')
@@ -68,7 +90,7 @@ export default function TrasactionPage() {
 
   React.useEffect(() => {
     dispatch(fetchTransaction())
-  }, [dispatch, transaction.keyword, transaction.couriers])
+  }, [dispatch, transaction.date, transaction.keyword, transaction.couriers, transaction.priceMin, transaction.priceMax])
 
   React.useEffect(() => {
     checkCourier()
@@ -145,6 +167,13 @@ export default function TrasactionPage() {
     progress: undefined,
   })
 
+
+  const onSubmit = async (data) => {
+    setIsShowFilterPrice(false)
+    setIsShowFilterPrice(false)
+    dispatch(setPrice(data.priceMin, data.priceMax))
+  }
+
   return (
     <React.Fragment>
       <ToastContainer />
@@ -166,24 +195,17 @@ export default function TrasactionPage() {
           </div>
           <div
             className="col-span-2 border rounded-lg border-neutral-200 py-4 flex items-center justify-center text-neutral-300 cursor-pointer"
-          // onClick={() =>
-          //   modalFilterHarga === false
-          //     ? setModalFilterHarga(true)
-          //     : setModalFilterHarga(false)
-          // }
+            onClick={() => setIsShowFilterPrice(true)}
           >
             Filter harga
           </div>
           <div
             className="col-span-2 border rounded-lg border-neutral-200 py-4 flex items-center justify-center text-neutral-300 cursor-pointer"
-          // onClick={() =>
-          //   modalCalenderDT === false
-          //     ? setModalCalenderDT(true)
-          //     : setModalCalenderDT(false)
-          // }
+            onClick={() => setIsShowed(true)}
           >
             Filter tanggal
           </div>
+
         </div>
       </div>
       {/* END: HEADER */}
@@ -214,20 +236,8 @@ export default function TrasactionPage() {
           {/* content right */}
           <div className="bg-white pb-9 border-b-2">
             {isShowEdit.loading ? <FadeLoader color={'#123abc'} /> :
-              <div className="px-12 pt-6">
-                <p className="text-3-bold">Nomor resi</p>
-                <p className="text-2">{dataEdit.noResi}</p>
-                <p className="text-3-bold mt-8">Jasa kurir</p>
-                <p className="text-2">{dataEdit.courier?.name}</p>
-                <p className="text-3-bold mt-8">Tanggal pengiriman</p>
-                <p className="text-2">{moment(dataEdit.deliveryDate).format('DD/MM/YYYY')}</p>
-                <p className="text-3-bold mt-8">Alamat tujuan</p>
-                <p className="text-2">{dataEdit.destinationAddress}</p>
-                <p className="text-3-bold mt-8">Biaya</p>
-                <p className="text-2">{`${formatRupiah(dataEdit.cost)}`}</p>
-                <p className="text-3-bold mt-8">Nama pengirim</p>
-                <p className="text-2">{dataEdit.senderName}</p>
-              </div>}
+              <ComponentToPrint dataEdit={dataEdit} ref={componentRef} />
+            }
 
           </div>
           <div className="shadow-card p-4">
@@ -240,7 +250,7 @@ export default function TrasactionPage() {
                   <Edit fill={"#3C60CD"} />
                 </button>
               </div>
-              <div className="col-span-4">
+              <div className="col-span-4" onClick={handlePrint}>
                 <button className="flex items-center justify-center w-full bg-blue-100 rounded-lg py-3 cursor-pointer focus:outline-none">
                   <Print fill={"#3C60CD"} />
                 </button>
@@ -386,7 +396,105 @@ export default function TrasactionPage() {
         }
       />}
 
+      {isShowFilterPrice && <Modal
+        onClick={() => {
+          setIsShowFilterPrice(false)
+          setValue('priceMin', '')
+          setValue('priceMax', '')
+        }}
+        content={
 
-    </React.Fragment>
+          <div className="rounded-lg bg-white absolute top-1/2 transform left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <form onSubmit={!loading.filterPrice ? handleSubmit(onSubmit) : null}>
+              <p className="border b-2 text-center text-1-bold py-4">
+                Filter harga
+              </p>
+              <div className="flex items-center px-11 py-9 border-b-2">
+                <div>
+                  <p className="text-2-bold text-neutral-400 mb-2">
+                    Dari harga
+                  </p>
+                  <input
+                    {...register("priceMin")}
+                    name="priceMin"
+                    type="number"
+                    className="rounded-lg pr-6 py-2 pl-4 border text-neutral-300 focus:outline-none border-neutral-200"
+                    placeholder="Rp."
+                  />
+                </div>
+                <Minus className="relative top-3 mx-5" fill={"#858585"} />
+                <div>
+                  <p className="text-2-bold text-neutral-400 mb-2">
+                    Dari harga
+                  </p>
+                  <input
+                    {...register("priceMax")}
+                    name="priceMax"
+                    type="number"
+                    className="rounded-lg pr-6 py-2 pl-4 border text-neutral-300 focus:outline-none border-neutral-200"
+                    placeholder="Rp."
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-2 px-5 py-3">
+                <div className="col-span-1">
+                  <button onClick={() => {
+                    setIsShowFilterPrice(false)
+                    setValue('priceMin', '')
+                    setValue('priceMax', '')
+                    dispatch(setPrice('', ''))
+                  }} className="bg-white border rounded-lg border-neutral-300 text-neutral-300 w-full py-3 text-2-bold">
+                    Reset filter
+                </button>
+                </div>
+                <div className="col-span-1">
+                  <button type="submit" className="rounded-lg  w-full py-3 text-2-bold text-white bg-blue-300">
+                    Terapkan filter
+                </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+        }
+      />}
+
+      {isShowed && (
+        <Modal
+          onClick={() => setIsShowed(false)}
+          content={
+            // tgl nya masih blm gua masukin agak tricky
+            // module tgl nya udah gua install
+            // kalo kurang lebar di atur aja ukuran width or heightnya
+            <div className="rounded-lg w-460px h-96  bg-white absolute top-1/2 transform left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <DateRange
+                date={transaction.date}
+                setIsShowed={() => setIsShowed(!isShowed)}
+                Top={"59px"}
+                onChangeDate={(ranges) => dispatch(setDate(ranges))}
+              />
+              <div className="grid grid-cols-2 gap-2 px-5 py-3">
+                <div className="col-span-1">
+                  <button onClick={() => {
+                    dispatch(setDate(''))
+                    dispatch(fetchTransaction())
+                    setIsShowed(false)
+                  }} className="bg-white border rounded-lg border-neutral-300 text-neutral-300 w-full py-3 text-2-bold">
+                    Reset filter
+                </button>
+                </div>
+                <div className="col-span-1">
+                  <button type="submit" className="rounded-lg  w-full py-3 text-2-bold text-white bg-blue-300">
+                    Terapkan filter
+                </button>
+                </div>
+              </div>
+            </div>
+
+          }
+        />
+      )}
+
+    </React.Fragment >
   )
 }

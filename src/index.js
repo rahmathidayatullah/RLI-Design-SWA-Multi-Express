@@ -9,6 +9,8 @@ import "assets/styles/checkbox.css";
 import "assets/styles/toggle.css";
 import 'react-toastify/dist/ReactToastify.css';
 import "react-datepicker/dist/react-datepicker.css";
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
 
 ReactDOM.render(
   <React.StrictMode>
