@@ -18,7 +18,7 @@ import ModalEdit from './edit'
 import Checkbox from 'components/Checkbox'
 import Minus from "assets/icon/Minus"
 import { useForm } from "react-hook-form"
-import DateRange from "components/InputDate"
+import DatePicker from 'react-datepicker'
 import { useReactToPrint } from 'react-to-print'
 import ComponentToPrint from './print'
 
@@ -36,6 +36,8 @@ export default function TrasactionPage() {
   const [courier, setFilterCourier] = React.useState([])
   const [loading, setLoading] = React.useState({ isRemove: false, filterPrice: false })
   let [isShowed, setIsShowed] = React.useState(false);
+  const [startDate, setStartDate] = React.useState(new Date())
+  const [endDate, setEndDate] = React.useState(new Date())
 
   const {
     register,
@@ -467,16 +469,26 @@ export default function TrasactionPage() {
             // module tgl nya udah gua install
             // kalo kurang lebar di atur aja ukuran width or heightnya
             <div className="rounded-lg w-460px h-96  bg-white absolute top-1/2 transform left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <DateRange
+              {/* <DateRange
                 date={transaction.date}
                 setIsShowed={() => setIsShowed(!isShowed)}
                 Top={"59px"}
                 onChangeDate={(ranges) => dispatch(setDate(ranges))}
+              /> */}
+              <DatePicker
+                selected={startDate}
+                onChange={date => setStartDate(date)}
+                inline
+              />
+              <DatePicker
+                selected={endDate}
+                onChange={date => setEndDate(date)}
+                inline
               />
               <div className="grid grid-cols-2 gap-2 px-5 py-3">
                 <div className="col-span-1">
                   <button onClick={() => {
-                    dispatch(setDate(''))
+                    dispatch(setDate('', ''))
                     dispatch(fetchTransaction())
                     setIsShowed(false)
                   }} className="bg-white border rounded-lg border-neutral-300 text-neutral-300 w-full py-3 text-2-bold">
@@ -484,7 +496,11 @@ export default function TrasactionPage() {
                 </button>
                 </div>
                 <div className="col-span-1">
-                  <button type="submit" className="rounded-lg  w-full py-3 text-2-bold text-white bg-blue-300">
+                  <button onClick={() => {
+                    dispatch(setDate(startDate, endDate))
+                    setIsShowed(false)
+                  }
+                  } type="submit" className="rounded-lg  w-full py-3 text-2-bold text-white bg-blue-300">
                     Terapkan filter
                 </button>
                 </div>

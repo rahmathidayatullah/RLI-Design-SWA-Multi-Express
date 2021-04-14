@@ -104,13 +104,15 @@ export const setPrice = (priceMin, priceMax) => {
   };
 }
 
-export const setDate = (data) => {
+export const setDate = (start, end) => {
   let date = {
+    startDate: start,
+    endDate: end,
     key: "selection",
   }
   return {
     type: SET_DATE,
-    date: data.selection ? data.selection : date,
+    date
   };
 };
 
