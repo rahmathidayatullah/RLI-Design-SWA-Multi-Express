@@ -8,6 +8,7 @@ module.exports = {
         "640px": "640px",
         "87%": "87%",
         "55vw": "55vw",
+        "fit-content": "fit-content",
       },
       textColor: {
         "neutral-500": "#00000",

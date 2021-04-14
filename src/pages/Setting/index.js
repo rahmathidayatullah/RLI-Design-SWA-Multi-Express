@@ -16,8 +16,8 @@ import EditCourier from "./editCourier";
 import Modal from "components/Modal";
 import TogglePin from "./togglePin";
 import EditPin from "./editPin";
-import DatePicker from 'react-datepicker'
-import ButtonExport from './export'
+import DatePicker from "react-datepicker";
+import ButtonExport from "./export";
 
 export default function SettingPage() {
   const dispatch = useDispatch();
@@ -36,47 +36,48 @@ export default function SettingPage() {
   const [fieldCourier, setFieldCourier] = React.useState({});
   const [isShowPin, setIsShowPin] = React.useState(false);
   const [isNewPin, setIsNewPin] = React.useState(false);
-  const [startDate, setStartDate] = React.useState(new Date())
-  const [endDate, setEndDate] = React.useState(new Date())
-  const [report, setReport] = React.useState([])
-
+  const [startDate, setStartDate] = React.useState(new Date());
+  const [endDate, setEndDate] = React.useState(new Date());
+  const [report, setReport] = React.useState([]);
 
   const handleExportCsv = async (start, end) => {
-    const res = await getData(`reports?startDate=${start || ''}&endDate=${end || ''}`)
-    setReport(res.data.data)
-  }
+    const res = await getData(
+      `reports?startDate=${start || ""}&endDate=${end || ""}`
+    );
+    setReport(res.data.data);
+  };
 
   React.useEffect(() => {
     dispatch(fetchCourier());
     dispatch(fetchSetting());
-    handleExportCsv(startDate, endDate)
+    handleExportCsv(startDate, endDate);
   }, [dispatch]);
 
   if (setting.status === "idle") return <FadeLoader color={"#123abc"} />;
 
   const handleUploadImage = async (e) => {
     if (
-      e.target.files[0].type === 'image/jpg' ||
-      e.target.files[0].type === 'image/png' ||
-      e.target.files[0].type === 'image/jpeg'
+      e.target.files[0].type === "image/jpg" ||
+      e.target.files[0].type === "image/png" ||
+      e.target.files[0].type === "image/jpeg"
     ) {
-      let payload = new FormData()
-      payload.append('image', e.target.files[0])
+      let payload = new FormData();
+      payload.append("image", e.target.files[0]);
 
       const res = await postData("images", payload);
 
       if (res.data.success) {
-        const update = await putData('settings', { photo: res.data.data })
+        const update = await putData("settings", { photo: res.data.data });
         if (update.data.success) {
           dispatch(fetchSetting());
           notify(`berhasil edit gambar`);
         }
-
       }
     } else {
-      notifyError('format gambar tidak sesuai silahkan masukan dengan format beriku ini : (.jpg, .png, png)')
+      notifyError(
+        "format gambar tidak sesuai silahkan masukan dengan format beriku ini : (.jpg, .png, png)"
+      );
     }
-
   };
 
   const handleResetImage = async () => {
@@ -180,8 +181,9 @@ export default function SettingPage() {
           <div className="col-span-1">
             <p className="text-1-bold">Foto logo</p>
             <div className="relative mt-4">
-              <div className="w-72 h-72 border rounded-lg flex justify-center p-4">
+              <div className="w-72 h-72 border rounded-lg flex items-center justify-center p-4">
                 <img
+                  className="w-full h-full"
                   src={`${config.api_host}/images/${setting.data?.photo}`}
                   alt="Photo"
                 />
@@ -372,13 +374,11 @@ export default function SettingPage() {
           <div className="grid grid-cols-2 gap-2 mt-4">
             <div className="col-span-1">
               <p className="text-2-bold text-neutral-400">Dari tanggal</p>
-              <div
-                className="py-4 px-6 text-neutral-500 text-2 border rounded-lg mt-2 cursor-pointer"
-              >
+              <div className="py-4 px-6 text-neutral-500 text-2 border rounded-lg mt-2 cursor-pointer">
                 <DatePicker
                   onChange={(date) => {
-                    setStartDate(date)
-                    handleExportCsv(date, endDate)
+                    setStartDate(date);
+                    handleExportCsv(date, endDate);
                   }}
                   selected={startDate}
                   className="rounded-lg pr-6 py-2 pl-4 border text-neutral-300 focus:outline-none border-neutral-200 cursor-pointer"
@@ -387,12 +387,11 @@ export default function SettingPage() {
             </div>
             <div className="col-span-1">
               <p className="text-2-bold text-neutral-400">Sampai tanggal</p>
-              <div
-                className="py-4 px-6 text-neutral-500 text-2 border rounded-lg mt-2 cursor-pointer">
+              <div className="py-4 px-6 text-neutral-500 text-2 border rounded-lg mt-2 cursor-pointer">
                 <DatePicker
                   onChange={(date) => {
-                    setEndDate(date)
-                    handleExportCsv(startDate, date)
+                    setEndDate(date);
+                    handleExportCsv(startDate, date);
                   }}
                   selected={endDate}
                   className="rounded-lg pr-6 py-2 pl-4 border text-neutral-300 focus:outline-none border-neutral-200 cursor-pointer"
