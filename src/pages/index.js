@@ -36,7 +36,7 @@ export default function PageSuccess() {
 
   return (
     <div className="flex">
-      <div className="flex flex-col justify-center items-center mt-10">
+      <div className="flex flex-col justify-center items-center pr-10 mr-20 border-r">
         <CheckCircle fill={"#3C60CD"} width={"105px"} height={"105px"} />
         <p className="heading-3 mt-11">Transaksi berhasil ditambah</p>
         <p className="text-2 mt-2 mb-11">{query.get("noResi")}</p>

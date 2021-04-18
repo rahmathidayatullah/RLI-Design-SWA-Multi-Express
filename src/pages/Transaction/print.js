@@ -5,7 +5,7 @@ import { formatRupiah } from "utils/formatRupiah";
 export default class Print extends Component {
   render() {
     return (
-      <div className={`px-12 pt-6 flex ${this.props.className}`}>
+      <div className={`px-12 pt-6 ${this.props.className}`}>
         <p className="text-3-bold">Nomor resi</p>
         <p className="text-2">{this.props.dataEdit.noResi}</p>
         <p className="text-3-bold mt-8">Jasa kurir</p>
