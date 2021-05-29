@@ -131,10 +131,12 @@ export default function TambahTransaksi() {
     setField({ ...field, courier: data.name });
     setIdCourier(data.id);
     dispatch(fetchCourier());
+
+    window.open(`${data.website}`, "_blank")
   };
 
   return (
-    <div className="grid grid-cols-4">
+    <div className="grid grid-cols-4 mb-5">
       <div className="col-span-3 flex flex-col">
         <p className="text-2-bold text-neutral-400 mb-2"> Jasa kurir</p>
         <div

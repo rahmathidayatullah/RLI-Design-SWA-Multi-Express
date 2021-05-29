@@ -173,7 +173,7 @@ export default function SettingPage() {
     });
 
   return (
-    <div className="grid grid-cols-4">
+    <div className="grid grid-cols-4 mb-5">
       <div className="col-span-3 flex-col">
         <ToastContainer />
         {/* START: HANDLE IMAGE OR LOGO */}

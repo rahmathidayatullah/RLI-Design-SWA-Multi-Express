@@ -112,9 +112,10 @@ export default function EditTransaction({ close, transaction, setting }) {
       }
 
     } catch (err) {
-
       if (err.response.data.code === "PIN_REQUIRED") {
         notifyError('pin yang anda masukan tidak salah.')
+      } else if (err.response.data.code === "") {
+
       }
     }
   }

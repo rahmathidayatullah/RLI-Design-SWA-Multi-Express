@@ -69,6 +69,7 @@ export default function TrasactionPage() {
       check.push({
         id: data.id,
         name: data.name,
+        website: data.website,
         isChecked: false,
       });
     });
@@ -250,7 +251,7 @@ export default function TrasactionPage() {
       {/* START: LIST TRANSACTION */}
       {/* END: LIST TRANSACTION */}
 
-      <div className="grid grid-cols-11 gap-7 mt-5">
+      <div className="grid grid-cols-11 gap-7 mt-5 mb-5">
         <div className="col-span-6">
           {transaction.status === "process" ? (
             <div className="flex items-center justify-center pt-10">
@@ -262,11 +263,10 @@ export default function TrasactionPage() {
                 <div
                   key={i}
                   onClick={() => handleShowFieldEdit(data)}
-                  className={`mb-2 rounded-lg p-6 shadow-card ${
-                    data.id === isShowEdit.id
-                      ? "bg-blue-300 text-neutral-100"
-                      : "bg-neutral-100 text-neutral-400"
-                  }  hover:bg-blue-300 duration-200 flex items-center justify-between  hover:text-neutral-100 cursor-pointer`}
+                  className={`mb-2 rounded-lg p-6 shadow-card ${data.id === isShowEdit.id
+                    ? "bg-blue-300 text-neutral-100"
+                    : "bg-neutral-100 text-neutral-400"
+                    }  hover:bg-blue-300 duration-200 flex items-center justify-between  hover:text-neutral-100 cursor-pointer`}
                 >
                   <div>
                     <p className="text-2-bold">{data.senderName}</p>
@@ -283,7 +283,7 @@ export default function TrasactionPage() {
           )}
         </div>
         {isShowEdit.status && (
-          <div className="col-span-5 shadow-card">
+          <div className="col-span-5 shadow-card mb-5">
             {/* content right */}
             <div className="bg-white pb-9 border-b-2">
               {isShowEdit.loading ? (
