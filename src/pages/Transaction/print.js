@@ -3,9 +3,12 @@ import moment from "moment";
 import { formatRupiah } from "utils/formatRupiah";
 import IconBarcode from "assets/icon/bacrode_test.png";
 import IconSWA from "assets/icon/Untitled.png";
+import Barcode from 'react-barcode'
 
 export default class Print extends Component {
   render() {
+    console.log("this.props.dataEdit")
+    console.log(this.props.dataEdit)
     return (
       <div className={`px-4 pt-2 ${this.props.className}`}>
         {/* <p className="text-3-bold">Nomor resi</p>
@@ -43,8 +46,8 @@ export default class Print extends Component {
                 PT.SWA MULTI EXPRESS
               </p>
               {/* IMAGE BARCODE */}
-              <img src={IconBarcode} />
-              <p>SME06-06022021</p>
+
+              <Barcode value={this.props.dataEdit.noResi} />
             </div>
           </div>
           {/* text section */}
@@ -54,7 +57,7 @@ export default class Print extends Component {
                 Jasa kurir / No Resi
               </p>
               <p className="text-sm whitespace-nowrap font-semibold">
-                : {this.props.dataEdit.noResi}
+                : {this.props.dataEdit.courier?.name}
               </p>
             </div>
             <div className="flex items-center w-full mt-2">
@@ -71,22 +74,14 @@ export default class Print extends Component {
                 Nama pengirim
               </p>
               <p className="text-sm whitespace-nowrap font-semibold">
-                : {this.props.dataEdit.courier?.name}
-              </p>
-            </div>
-            <div className="flex items-center w-full mt-2">
-              <p className="w-48 text-sm whitespace-nowrap font-semibold">
-                No Telpon Pengirim
-              </p>
-              <p className="text-sm whitespace-nowrap font-semibold">
-                : 091139293923
+                : {this.props.dataEdit.senderName}
               </p>
             </div>
             <div className="flex items-center w-full mt-2">
               <p className="w-48 text-sm whitespace-nowrap font-semibold">
                 Tujuan
               </p>
-              <p className="text-sm whitespace-nowrap font-semibold">
+              <p className="text-sm font-semibold">
                 : {this.props.dataEdit.destinationAddress}
               </p>
             </div>
